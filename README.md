@@ -1,2 +1,17 @@
 # transcriber
-/bin/zsh -c 'set -euo pipefail; PROJECT_DIR="$HOME/Downloads/transcriber"; cd "$PROJECT_DIR"; VENV="$PROJECT_DIR/.venv"; PY="$VENV/bin/python"; PIP="$VENV/bin/pip"; [ -x "$PY" ] || /usr/bin/python3 -m venv "$VENV"; export PATH="$VENV/bin:$PATH"; "$PIP" install -U pip >/dev/null; [ -f requirements.txt ] && "$PIP" install -r requirements.txt >/dev/null; "$PIP" install -U browser-cookie3 keyring >/dev/null || true; mkdir -p "$PROJECT_DIR/data/out" "$PROJECT_DIR/data" "$PROJECT_DIR/logs"; [ -f "$PROJECT_DIR/cookies.txt" ] || "$PY" export_youtube_cookies.py --browser firefox --outfile "$PROJECT_DIR/cookies.txt"; COOKIES="$PROJECT_DIR/cookies.txt" EXTRACTOR_ARGS="youtube:player_client=web" OUT_DIR="$PROJECT_DIR/data/out" ARCHIVE="$PROJECT_DIR/data/archive.txt" URLS_FILE="$PROJECT_DIR/urls.txt" "$PY" app.py'
+/bin/zsh -c 'set -euo pipefail; P="$HOME/Downloads/transcriber"; cd "$P"; V="$P/.venv/bin/python"; mkdir -p "$P/data/out" "$P/data"; touch "$P/urls.txt"; URL="https://www.youtube.com/watch?v=5lWLLD3fTM4"; grep -qxF "$URL" "$P/urls.txt" || echo "$URL" >> "$P/urls.txt"; COOKIES="$P/cookies.txt" EXTRACTOR_ARGS="youtube:player_client=web" OUT_DIR="$P/data/out" ARCHIVE="$P/data/archive.txt" URLS_FILE="$P/urls.txt" "$V" app.py'
+
+导出 cookies.txt（用这个 profile）
+cd ~/Downloads/transcriber
+./.venv/bin/python export_youtube_cookies.py \
+  --browser firefox \
+  --cookie-file "/Users/nixonfaud/Library/Application Support/Firefox/Profiles/yxpahkkf.default-release/cookies.sqlite" \
+  --outfile ./cookies.txt
+
+验证这份 cookies 能否看该会员视频
+URL='https://www.youtube.com/watch?v=mnNhQVKCT2M'
+yt-dlp --cookies ./cookies.txt --extractor-args "youtube:player_client=web" -F "$URL"
+
+/bin/zsh -c 'set -euo pipefail; P="$HOME/Downloads/transcriber"; cd "$P"; V="$P/.venv/bin/python"; mkdir -p "$P/data/out" "$P/data"; COOKIES="$P/cookies.txt" EXTRACTOR_ARGS="youtube:player_client=web" OUT_DIR="$P/data/out" ARCHIVE="$P/data/archive.txt" URLS_FILE="$P/urls.txt" "$V" app.py'
+
+
