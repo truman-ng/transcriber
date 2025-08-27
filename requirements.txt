@@ -1,3 +1,4 @@
+browser-cookie3
 yt-dlp==2025.01.12
 faster-whisper==1.0.3
 ffmpeg-python==0.2.0
