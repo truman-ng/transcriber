@@ -1,0 +1,4 @@
+# 一行一个，可以是频道、播放列表或单视频
+https://www.youtube.com/watch?v=tq3oscKyLYI
+# https://www.youtube.com/playlist?list=PLxxxx
+# https://www.youtube.com/@channelname/videos
