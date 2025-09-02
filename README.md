@@ -34,7 +34,7 @@ cd "$P"
 
 /bin/zsh -c "set -e; P=\"$HOME/Downloads/transcriber\"; cd \"$P\"; PROF=\"$HOME/Library/Application Support/Firefox/Profiles/yxpahkkf.default-release/cookies.sqlite\"; \"$P/.venv/bin/python\" export_youtube_cookies.py --browser firefox --cookie-file \"$PROF\" --outfile cookies.txt; awk -F'\t' 'BEGIN{OFS=\"\t\"} /^#/||\$0==\"\"{print;next} \$1~/youtube\\.com\$/ && \$6~/^(__Secure-([13]P)?SID(TS|CC)?|SID(CC)?|SAPISID|APISID|HSID|SSID|LOGIN_INFO)\$/{print}' cookies.txt > cookies.slim.txt; echo \"Wrote \$P/cookies.slim.txt from \$PROF\""
 
-URL='https://www.youtube.com/watch?v=XxoLgy5yo8o'
+URL='https://www.youtube.com/watch?v=1CLplJ9hojI'
 "$P/.venv/bin/yt-dlp" --cookies "$P/cookies.slim.txt" --extractor-args "youtube:player_client=web" -F "$URL"
 
 /bin/zsh -c 'set -euo pipefail; P="$HOME/Downloads/transcriber"; cd "$P"; export PATH="$P/.venv/bin:$PATH"; Y="$P/.venv/bin/yt-dlp"; PY="$P/.venv/bin/python"; C="$P/cookies.slim.txt"; URL="https://www.youtube.com/watch?v=XxoLgy5yo8o"; mkdir -p "$P/data/out" "$P/data"; touch "$P/urls.txt"; grep -qxF "$URL" "$P/urls.txt" || echo "$URL" >> "$P/urls.txt"; CLIENT=web; "$Y" --cookies "$C" --extractor-args "youtube:player_client=$CLIENT" -F "$URL" >/dev/null 2>&1 || CLIENT=ios; echo "[use client] $CLIENT"; COOKIES="$C" EXTRACTOR_ARGS="youtube:player_client=$CLIENT" OUT_DIR="$P/data/out" ARCHIVE="$P/data/archive.txt" URLS_FILE="$P/urls.txt" "$PY" app.py'
